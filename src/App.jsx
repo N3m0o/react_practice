@@ -29,9 +29,13 @@ const users = usersFromServer;
 export const App = () => {
   const [selectedUser, setSelectedUser] = useState(null);
   // const [selectedCategories, setSelectedCategories] = useState([]);
+  const [searchQuary, setSearchQuary] = useState('');
 
   const visibleProducts = myProducts.filter(product => {
     if (selectedUser && product.owner.id !== selectedUser) {
+      return false;
+    }
+    if(searchQuary && !product.name.toLocaleLowerCase().trim().includes(searchQuary.toLowerCase().trim())){
       return false;
     }
 
@@ -81,7 +85,8 @@ export const App = () => {
                   type="text"
                   className="input"
                   placeholder="Search"
-                  value="qwe"
+                  value={searchQuary}
+                  onChange={e => setSearchQuary(e.target.value)}
                 />
 
                 <span className="icon is-left">
@@ -90,11 +95,14 @@ export const App = () => {
 
                 <span className="icon is-right">
                   {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
-                  <button
-                    data-cy="ClearButton"
-                    type="button"
-                    className="delete"
-                  />
+                  {searchQuary && (
+                    <button
+                      data-cy="ClearButton"
+                      type="button"
+                      className="delete"
+                      onClick={() => setSearchQuary('')}
+                    />
+                  )}
                 </span>
               </p>
             </div>
