@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/accessible-emoji */
-import React from 'react';
 import './App.scss';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import usersFromServer from './api/users';
 import categoriesFromServer from './api/categories';
 import productsFromServer from './api/products';
@@ -25,18 +24,23 @@ const tableHeaders = [
 ];
 
 const users = usersFromServer;
-const categories = categoriesFromServer;
+// const categories = categoriesFromServer;
 
 export const App = () => {
   const [selectedUser, setSelectedUser] = useState(null);
-  const [selectedCategories, setSelectedCategories] = useState([]);
+  // const [selectedCategories, setSelectedCategories] = useState([]);
 
   const visibleProducts = myProducts.filter(product => {
     if (selectedUser && product.owner.id !== selectedUser) {
       return false;
     }
+
     return true;
   });
+
+  const resetFilters = () => {
+    setSelectedUser(null);
+  };
 
   return (
     <div className="section">
@@ -133,6 +137,9 @@ export const App = () => {
                 data-cy="ResetAllButton"
                 href="#/"
                 className="button is-link is-outlined is-fullwidth"
+                onClick={() => {
+                  resetFilters();
+                }}
               >
                 Reset all filters
               </a>
@@ -141,9 +148,11 @@ export const App = () => {
         </div>
 
         <div className="box table-container">
-          <p data-cy="NoMatchingMessage">
-            No products matching selected criteria
-          </p>
+          {visibleProducts.length === 0 && (
+            <p data-cy="NoMatchingMessage">
+              No products matching selected criteria
+            </p>
+          )}
 
           <table
             data-cy="ProductTable"
