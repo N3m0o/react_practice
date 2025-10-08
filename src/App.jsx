@@ -30,6 +30,8 @@ export const App = () => {
   const [selectedUser, setSelectedUser] = useState(null);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [searchQuary, setSearchQuary] = useState('');
+  // const [sort, setSort] = useState({sortCategory: null, sortDirection: null}); Застопився тут. Подивився в нейронці як далі
+  // реалізовувати сортування. Сам не розумію, списувати не буду.
 
   const visibleProducts = myProducts.filter(product => {
     if (selectedUser && product.owner.id !== selectedUser) {
