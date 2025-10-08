@@ -5,7 +5,6 @@ import usersFromServer from './api/users';
 import categoriesFromServer from './api/categories';
 import productsFromServer from './api/products';
 
-
 const myProducts = productsFromServer.map(product => {
   const category = categoriesFromServer.find(c => c.id === product.categoryId);
   const owner = usersFromServer.find(u => u.id === category.ownerId);
@@ -134,15 +133,17 @@ export const App = () => {
 
             <div className="panel-block is-flex-wrap-wrap">
               <button
-               type="button"
+                type="button"
                 href="#/"
                 data-cy="AllCategories"
                 className={`button is-success mr-6 ${selectedCategories.length === 0 ? 'is-outlined' : ''}`}
+                onClick={() => setSelectedCategories([])}
               >
                 All
               </button>
               {categoriesList.map(category => (
                 <button
+                  type="button"
                   key={category.id}
                   data-cy="Category"
                   className={`button mr-2 my-1 ${selectedCategories.includes(category.id) ? 'is-info' : ''}`}
